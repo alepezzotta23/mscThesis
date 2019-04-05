@@ -1,0 +1,20 @@
+%*******************************************************
+% Bibliografia
+%*******************************************************
+\cleardoublepage
+
+\listoffigures
+%\listoftables
+\lstlistoflistings
+
+%\phantomsection
+\addcontentsline{toc}{chapter}{\bibname}
+\nocite{*}
+ 
+% Le fonti vengono richiamate nel testo con:
+% \cite{etichetta} solo per il numero --> [x]
+% \citet{etichetta} per avere anche il nome dell'autore --> autore [x]
+
+%\bibliographystyle{abbrvnat} % stile
+\bibliography{bibliography} % carica le fonti che sono descritte in bibliografia.bib
+\bibliographystyle{ieeetr}
