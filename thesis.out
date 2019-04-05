@@ -1,0 +1,61 @@
+\BOOKMARK [0][-]{chapter.1}{Introduzione}{}% 1
+\BOOKMARK [0][-]{chapter.2}{Stato dell'Arte}{}% 2
+\BOOKMARK [1][-]{section.2.1}{Origine ed evoluzione del Secondary Ticketing}{chapter.2}% 3
+\BOOKMARK [2][-]{subsection.2.1.1}{Architetture software dei portali di Secondary Ticketing}{section.2.1}% 4
+\BOOKMARK [2][-]{subsection.2.1.2}{Differenze dagli altri mercati secondari}{section.2.1}% 5
+\BOOKMARK [1][-]{section.2.2}{Possibili cause del Secondary Ticketing}{chapter.2}% 6
+\BOOKMARK [2][-]{subsection.2.2.1}{Funzioni di costo e avversit\340 al rischio}{section.2.2}% 7
+\BOOKMARK [2][-]{subsection.2.2.2}{Riallocazione efficiente dei biglietti}{section.2.2}% 8
+\BOOKMARK [2][-]{subsection.2.2.3}{Politiche di Pricing}{section.2.2}% 9
+\BOOKMARK [3][-]{subsubsection.2.2.3.1}{Underpricing}{subsection.2.2.3}% 10
+\BOOKMARK [3][-]{subsubsection.2.2.3.2}{Price Discrimination}{subsection.2.2.3}% 11
+\BOOKMARK [1][-]{section.2.3}{Impatti del Secondary Ticketing sugli Stakeholder}{chapter.2}% 12
+\BOOKMARK [2][-]{subsection.2.3.1}{Danni per il Promoter}{section.2.3}% 13
+\BOOKMARK [3][-]{subsubsection.2.3.1.1}{Danni economici}{subsection.2.3.1}% 14
+\BOOKMARK [3][-]{subsubsection.2.3.1.2}{Danni reputazionali}{subsection.2.3.1}% 15
+\BOOKMARK [3][-]{subsubsection.2.3.1.3}{Mancanza di controlli sulla distribuzione dei biglietti}{subsection.2.3.1}% 16
+\BOOKMARK [2][-]{subsection.2.3.2}{Danni per il consumatore}{section.2.3}% 17
+\BOOKMARK [2][-]{subsection.2.3.3}{Danni per l'artista}{section.2.3}% 18
+\BOOKMARK [1][-]{section.2.4}{Esempi concreti di Secondary Ticketing}{chapter.2}% 19
+\BOOKMARK [2][-]{subsection.2.4.1}{2009: Springsteen contro Ticketmaster}{section.2.4}% 20
+\BOOKMARK [2][-]{subsection.2.4.2}{2012: "Shameless Sandy Outrage"}{section.2.4}% 21
+\BOOKMARK [2][-]{subsection.2.4.3}{2016: caso Chance the Rapper}{section.2.4}% 22
+\BOOKMARK [2][-]{subsection.2.4.4}{2016: caso Coldplay}{section.2.4}% 23
+\BOOKMARK [2][-]{subsection.2.4.5}{2018: Ed Sheeran collabora con Agenti Federali}{section.2.4}% 24
+\BOOKMARK [0][-]{chapter.3}{Provvedimenti attuati e Best-Practice}{}% 25
+\BOOKMARK [1][-]{section.3.1}{Provvedimenti Legali}{chapter.3}% 26
+\BOOKMARK [1][-]{section.3.2}{Provvedimenti Strategici}{chapter.3}% 27
+\BOOKMARK [2][-]{subsection.3.2.1}{Provvedimenti Collaborativi}{section.3.2}% 28
+\BOOKMARK [2][-]{subsection.3.2.2}{Provvedimenti di contenimento}{section.3.2}% 29
+\BOOKMARK [3][-]{subsubsection.3.2.2.1}{Dynamic Ticket Pricing}{subsection.3.2.2}% 30
+\BOOKMARK [3][-]{subsubsection.3.2.2.2}{Paperless Ticket}{subsection.3.2.2}% 31
+\BOOKMARK [4][-]{paragraph.3.2.2.2.1}{Biglietti nominali in Italia}{subsubsection.3.2.2.2}% 32
+\BOOKMARK [4][-]{paragraph.3.2.2.2.2}{Verified Fan Program}{subsubsection.3.2.2.2}% 33
+\BOOKMARK [3][-]{subsubsection.3.2.2.3}{Aumento dei prezzi}{subsection.3.2.2}% 34
+\BOOKMARK [1][-]{section.3.3}{Provvedimenti Tecnici}{chapter.3}% 35
+\BOOKMARK [2][-]{subsection.3.3.1}{CAPTCHA}{section.3.3}% 36
+\BOOKMARK [3][-]{subsubsection.3.3.1.1}{Inefficacia del CAPTCHA nel mondo del ticketing}{subsection.3.3.1}% 37
+\BOOKMARK [2][-]{subsection.3.3.2}{CitizenTicket e la blockchain BitTicket}{section.3.3}% 38
+\BOOKMARK [3][-]{subsubsection.3.3.2.1}{Identit\340 nella blockchain BitTicket}{subsection.3.3.2}% 39
+\BOOKMARK [0][-]{chapter.4}{Sviluppo della soluzione Equiticket come risposta al Secondary Ticketing}{}% 40
+\BOOKMARK [1][-]{section.4.1}{Architettura software}{chapter.4}% 41
+\BOOKMARK [2][-]{subsection.4.1.1}{PHP e Laravel}{section.4.1}% 42
+\BOOKMARK [2][-]{subsection.4.1.2}{Architettura Cloud dell'applicazione}{section.4.1}% 43
+\BOOKMARK [3][-]{subsubsection.4.1.2.1}{Capacit\340 di calcolo automaticamente scalabile}{subsection.4.1.2}% 44
+\BOOKMARK [3][-]{subsubsection.4.1.2.2}{Vantaggi rispetto alla soluzione on-premise}{subsection.4.1.2}% 45
+\BOOKMARK [2][-]{subsection.4.1.3}{Descrizione delle componenti}{section.4.1}% 46
+\BOOKMARK [2][-]{subsection.4.1.4}{Design dell'interazione degli utenti}{section.4.1}% 47
+\BOOKMARK [3][-]{subsubsection.4.1.4.1}{Vendita di un biglietto}{subsection.4.1.4}% 48
+\BOOKMARK [4][-]{paragraph.4.1.4.1.1}{Stripe Token}{subsubsection.4.1.4.1}% 49
+\BOOKMARK [4][-]{paragraph.4.1.4.1.2}{Authorization and Capture}{subsubsection.4.1.4.1}% 50
+\BOOKMARK [3][-]{subsubsection.4.1.4.2}{Processo di acquisto}{subsection.4.1.4}% 51
+\BOOKMARK [3][-]{subsubsection.4.1.4.3}{Spedizione dei biglietti al destinatario}{subsection.4.1.4}% 52
+\BOOKMARK [3][-]{subsubsection.4.1.4.4}{Inserimento di un evento}{subsection.4.1.4}% 53
+\BOOKMARK [2][-]{subsection.4.1.5}{Gestione dei pagamenti e controllo anti-frode}{section.4.1}% 54
+\BOOKMARK [3][-]{subsubsection.4.1.5.1}{Trattenute sulla carta di credito del venditore}{subsection.4.1.5}% 55
+\BOOKMARK [1][-]{section.4.2}{Test della soluzione in casi reali}{chapter.4}% 56
+\BOOKMARK [2][-]{subsection.4.2.1}{Simulazione di un caso di tentata frode}{section.4.2}% 57
+\BOOKMARK [2][-]{subsection.4.2.2}{Simulazione di una transazione terminata con successo}{section.4.2}% 58
+\BOOKMARK [1][-]{section.4.3}{Progetti e sviluppi futuri}{chapter.4}% 59
+\BOOKMARK [0][-]{chapter.5}{Conclusioni}{}% 60
+\BOOKMARK [0][-]{chapter*.31}{Bibliografia}{}% 61

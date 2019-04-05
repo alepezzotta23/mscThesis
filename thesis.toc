@@ -1,0 +1,64 @@
+\babel@toc {italian}{}
+\babel@toc {italian}{}
+\contentsline {chapter}{\numberline {1}Introduzione}{1}{chapter.1}% 
+\contentsline {chapter}{\numberline {2}Stato dell'Arte}{3}{chapter.2}% 
+\contentsline {section}{\numberline {2.1}Origine ed evoluzione del Secondary Ticketing}{3}{section.2.1}% 
+\contentsline {subsection}{\numberline {2.1.1}Architetture software dei portali di Secondary Ticketing}{6}{subsection.2.1.1}% 
+\contentsline {subsection}{\numberline {2.1.2}Differenze dagli altri mercati secondari}{6}{subsection.2.1.2}% 
+\contentsline {section}{\numberline {2.2}Possibili cause del Secondary Ticketing}{9}{section.2.2}% 
+\contentsline {subsection}{\numberline {2.2.1}Funzioni di costo e avversit\IeC {\`a} al rischio}{9}{subsection.2.2.1}% 
+\contentsline {subsection}{\numberline {2.2.2}Riallocazione efficiente dei biglietti}{12}{subsection.2.2.2}% 
+\contentsline {subsection}{\numberline {2.2.3}Politiche di Pricing}{13}{subsection.2.2.3}% 
+\contentsline {subsubsection}{\numberline {2.2.3.1}Underpricing}{13}{subsubsection.2.2.3.1}% 
+\contentsline {subsubsection}{\numberline {2.2.3.2}Price Discrimination}{14}{subsubsection.2.2.3.2}% 
+\contentsline {section}{\numberline {2.3}Impatti del Secondary Ticketing sugli Stakeholder}{15}{section.2.3}% 
+\contentsline {subsection}{\numberline {2.3.1}Danni per il Promoter}{15}{subsection.2.3.1}% 
+\contentsline {subsubsection}{\numberline {2.3.1.1}Danni economici}{16}{subsubsection.2.3.1.1}% 
+\contentsline {subsubsection}{\numberline {2.3.1.2}Danni reputazionali}{16}{subsubsection.2.3.1.2}% 
+\contentsline {subsubsection}{\numberline {2.3.1.3}Mancanza di controlli sulla distribuzione dei biglietti}{16}{subsubsection.2.3.1.3}% 
+\contentsline {subsection}{\numberline {2.3.2}Danni per il consumatore}{17}{subsection.2.3.2}% 
+\contentsline {subsection}{\numberline {2.3.3}Danni per l'artista}{17}{subsection.2.3.3}% 
+\contentsline {section}{\numberline {2.4}Esempi concreti di Secondary Ticketing}{18}{section.2.4}% 
+\contentsline {subsection}{\numberline {2.4.1}2009: Springsteen contro Ticketmaster}{18}{subsection.2.4.1}% 
+\contentsline {subsection}{\numberline {2.4.2}2012: "Shameless Sandy Outrage"}{18}{subsection.2.4.2}% 
+\contentsline {subsection}{\numberline {2.4.3}2016: caso Chance the Rapper}{19}{subsection.2.4.3}% 
+\contentsline {subsection}{\numberline {2.4.4}2016: caso Coldplay}{19}{subsection.2.4.4}% 
+\contentsline {subsection}{\numberline {2.4.5}2018: Ed Sheeran collabora con Agenti Federali}{19}{subsection.2.4.5}% 
+\contentsline {chapter}{\numberline {3}Provvedimenti attuati e Best-Practice}{21}{chapter.3}% 
+\contentsline {section}{\numberline {3.1}Provvedimenti Legali}{21}{section.3.1}% 
+\contentsline {section}{\numberline {3.2}Provvedimenti Strategici}{23}{section.3.2}% 
+\contentsline {subsection}{\numberline {3.2.1}Provvedimenti Collaborativi}{23}{subsection.3.2.1}% 
+\contentsline {subsection}{\numberline {3.2.2}Provvedimenti di contenimento}{24}{subsection.3.2.2}% 
+\contentsline {subsubsection}{\numberline {3.2.2.1}Dynamic Ticket Pricing}{24}{subsubsection.3.2.2.1}% 
+\contentsline {subsubsection}{\numberline {3.2.2.2}Paperless Ticket}{26}{subsubsection.3.2.2.2}% 
+\contentsline {paragraph}{\numberline {3.2.2.2.1}Biglietti nominali in Italia}{26}{paragraph.3.2.2.2.1}% 
+\contentsline {paragraph}{\numberline {3.2.2.2.2}Verified Fan Program}{27}{paragraph.3.2.2.2.2}% 
+\contentsline {subsubsection}{\numberline {3.2.2.3}Aumento dei prezzi}{28}{subsubsection.3.2.2.3}% 
+\contentsline {section}{\numberline {3.3}Provvedimenti Tecnici}{28}{section.3.3}% 
+\contentsline {subsection}{\numberline {3.3.1}CAPTCHA}{28}{subsection.3.3.1}% 
+\contentsline {subsubsection}{\numberline {3.3.1.1}Inefficacia del CAPTCHA nel mondo del ticketing}{29}{subsubsection.3.3.1.1}% 
+\contentsline {subsection}{\numberline {3.3.2}CitizenTicket e la blockchain BitTicket}{31}{subsection.3.3.2}% 
+\contentsline {subsubsection}{\numberline {3.3.2.1}Identit\IeC {\`a} nella blockchain BitTicket}{31}{subsubsection.3.3.2.1}% 
+\contentsline {chapter}{\numberline {4}Sviluppo della soluzione Equiticket come risposta al Secondary Ticketing}{33}{chapter.4}% 
+\contentsline {section}{\numberline {4.1}Architettura software}{37}{section.4.1}% 
+\contentsline {subsection}{\numberline {4.1.1}PHP e Laravel}{38}{subsection.4.1.1}% 
+\contentsline {subsection}{\numberline {4.1.2}Architettura Cloud dell'applicazione}{38}{subsection.4.1.2}% 
+\contentsline {subsubsection}{\numberline {4.1.2.1}Capacit\IeC {\`a} di calcolo automaticamente scalabile}{38}{subsubsection.4.1.2.1}% 
+\contentsline {subsubsection}{\numberline {4.1.2.2}Vantaggi rispetto alla soluzione on-premise}{39}{subsubsection.4.1.2.2}% 
+\contentsline {subsection}{\numberline {4.1.3}Descrizione delle componenti}{39}{subsection.4.1.3}% 
+\contentsline {subsection}{\numberline {4.1.4}Design dell'interazione degli utenti}{39}{subsection.4.1.4}% 
+\contentsline {subsubsection}{\numberline {4.1.4.1}Vendita di un biglietto}{40}{subsubsection.4.1.4.1}% 
+\contentsline {paragraph}{\numberline {4.1.4.1.1}Stripe Token}{43}{paragraph.4.1.4.1.1}% 
+\contentsline {paragraph}{\numberline {4.1.4.1.2}Authorization and Capture}{43}{paragraph.4.1.4.1.2}% 
+\contentsline {subparagraph}{Pagamenti non catturati}{45}{section*.24}% 
+\contentsline {subsubsection}{\numberline {4.1.4.2}Processo di acquisto}{45}{subsubsection.4.1.4.2}% 
+\contentsline {subsubsection}{\numberline {4.1.4.3}Spedizione dei biglietti al destinatario}{48}{subsubsection.4.1.4.3}% 
+\contentsline {subsubsection}{\numberline {4.1.4.4}Inserimento di un evento}{49}{subsubsection.4.1.4.4}% 
+\contentsline {subsection}{\numberline {4.1.5}Gestione dei pagamenti e controllo anti-frode}{51}{subsection.4.1.5}% 
+\contentsline {subsubsection}{\numberline {4.1.5.1}Trattenute sulla carta di credito del venditore}{51}{subsubsection.4.1.5.1}% 
+\contentsline {section}{\numberline {4.2}Test della soluzione in casi reali}{52}{section.4.2}% 
+\contentsline {subsection}{\numberline {4.2.1}Simulazione di un caso di tentata frode}{52}{subsection.4.2.1}% 
+\contentsline {subsection}{\numberline {4.2.2}Simulazione di una transazione terminata con successo}{52}{subsection.4.2.2}% 
+\contentsline {section}{\numberline {4.3}Progetti e sviluppi futuri}{52}{section.4.3}% 
+\contentsline {chapter}{\numberline {5}Conclusioni}{53}{chapter.5}% 
+\contentsline {chapter}{Bibliografia}{57}{chapter*.31}% 

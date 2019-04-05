@@ -1,0 +1,34 @@
+\documentclass[a4paper,12pt,openright,twoside,reqno]{book}
+
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+
+\usepackage{packages}
+
+\begin{document}
+
+\include{frontmatter/frontespizio}
+
+\frontmatter
+
+\include{frontmatter/citazione}
+
+\include{frontmatter/ringraziamenti}
+
+\include{frontmatter/indice}
+
+\mainmatter 
+
+% Chapters
+\include{chapter1/introduzione}
+\include{chapter2/stato_arte}
+\include{chapter3/bestpractice}
+\include{chapter4/equiticket}
+\include{chapter5/conclusioni}
+
+\backmatter
+
+%Include .bib (BibTex) bibliography
+\include{backmatter/bibliografia}
+
+\end{document}
