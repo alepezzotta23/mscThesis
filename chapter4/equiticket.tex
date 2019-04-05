@@ -1,0 +1,363 @@
+\chapter{Sviluppo della soluzione Equiticket come risposta al Secondary Ticketing}
+\label{chap:equiticket}
+Il capitolo ha lo scopo di presentare il vero e proprio contributo personale dell'autore della tesi: la contribuzione allo sviluppo della piattaforma Equiticket, prima start-up in Italia a presentarsi come alternativa concreta al Secondary Ticketing. \\*
+\`E oppurtuno sottolineare il fatto che il progetto si concentri principalmente sul combattere la rivendita di titoli di accesso a prezzo maggiorato, che, come è stato dimostrato nei capitoli \ref{chap:stato_arte} e \ref{chap:best_p}, danneggia pesantemente il mercato, gli artisti e i consumatori. 
+Equiticket (logo in Figura \ref{logoequi}) si presenta come un portale dove ogni utente può rivendere il suo biglietto con la condizione che la cifra richiesta sia minore o uguale al prezzo di emissione, in modo da disincentivare la speculazione tra utenti. 
+%Inserire logo Equiticket e immagine della pagina
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.68\textwidth]{chapter4/immagini/logo300}
+	\caption{Logo di Equiticket}
+	\label{logoequi}
+\end{figure}
+Equiticket si avvale di un'architettura software sviluppata completamente in ambiente Cloud, oltre che di una logica anti-truffa proprietaria e sviluppata in modo tale da garantire al consumatore finale la migliore esperienza di acquisto possibile. 
+Equiticket è stato rilasciato nell'aprile del 2018 e, pochi mesi dopo, a cavallo tra Ottobre 2018 e Febbraio 2019, ha ricevuto finanziamenti esterni per una quota di circa 233.000€ tramite una campagna di \textit{Equity Crowdfunding} sul portale \textit{Opstart}, portale specializzato nella ricerca di finanziamenti per start-up e PMI.
+Una volta appurata l'impossibilità, come discusso nel capitolo precedente, di fronteggiare i cosiddetti bot in grado di effettuare acquisti im modalità "bulk buy" dai portali primari, l'attenzione è stata posta principalmente su due obiettivi principali: 
+\begin{itemize}
+\item La lotta alla speculazione ai danni del consumatore
+\item La lotta alla vendita di biglietti contraffatti o inesistenti 
+\item La possibilità concreta di sfruttare la tendenza del mercato secondario ad abbassare il prezzo medio nel periodo immediatamente precedente la manifestazione
+\end{itemize}
+L'idea di Equiticket nasce dalla volontà di garantire ai consumatori sia la migliore esperienza di acquisto possibile, sia un maggiore surplus, dato dalla possibilità di rivendere biglietti per necessità e di acquistarli a un valore uguale o inferiore a quello di emissione. L'intuizione, avuta in seguito ad analisi dei dati di vendita di mercato primario e secondario, è quella di sfruttare i cali di prezzo medio che il mercato della rivendita ha quando ci si avvicina alla data dell'evento. 
+Questa tendenza, discussa nei capitoli precedenti e supportata da più voci nella letteratura (\cite{tompkins2018ticket, courty2017ticket}), si può spiegare notando che le transazioni sul mercato secondario avvengono principalmente nei momenti antecedenti il cosiddetto "sold-out" sul mercato primario: si stima che in questo momento gli utenti siano più incentivati a tentare di comprare i loro titoli di accesso, nella speranza di riuscire, piuttosto che aspettare. Grazie al pricing dinamico (\textit{DTP}), il prezzo dei biglietti cresce  proporzionalmente al numero di transazioni effettuate, ed è in questo momento che gli speculatori accumulano la maggior parte del profitto. Quando la data della manifestazione è prossima, entrano nel mercato anche gli individui realmente impossibilitati a partecipare all'evento e intenzionati a recuperare la cifra investita tempo prima per l'acquisto del biglietto, o almeno una percentuale. 
+Aumenta così esponenzialmente l'offerta, mentre la domanda resta costante, in quanto gli utenti ancora non serviti sono coloro che hanno deciso di aspettare l'ultimo momento possibile per acquistare i propri titoli di accesso, ed il loro numero non è aumentato. 
+Il prezzo medio sul mercato secondario così scende drasticamente, e non è infrequente trovare biglietti a un prezzo estremamente inferiore su Viagogo o StubHub nei giorni prossimi al concerto o alla manifestazione sportiva. Il trend del calo dei prezzi è riscontrabile anche per quanto riguarda i festival, manifestazioni che spesso si estendono oltre i due giorni di durata e coinvolgono un vasto pubblico, che può arrivare a contare anche più di 100.000 partecipanti a giornata (\cite{perez2016music}): Perez infatti riscontra, in seguito a un'analisi di circa 20 tra i maggiori festival musicali sul territorio degli Stati Uniti, come nei 15 giorni precedenti la manifestazione si siano verificate numerose transazioni a prezzi sotto il "face value" del titolo di accesso. Le figure \ref{coach} e \ref{acl} mostrano il trend della vendita di titoli di accesso sul mercato secondario per diversi festival, tra cui i noti \textit{Coachella}, \textit{Ultra Music Festival}, \textit{Lollapalooza}, \textit{Electric Daisy Carnival} e \textit{Austin City Limits}: 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.68\textwidth]{chapter4/immagini/coachella1315}
+	\caption{Vendite sui portali secondari delle edizioni 2013 e 2015 del Coachella Arts Festival}
+	\label{coach}
+\end{figure}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.68\textwidth]{chapter4/immagini/acl1315}
+	\caption{Vendite sui portali secondari delle edizioni 2013 e 2015 di Austin City Limits}
+	\label{acl}
+\end{figure}
+Si può notare come, con l'avvicinarsi dell'evento, da una parte sia aumentato il quantitativo delle vendite giornaliere, mentre dall'altra il prezzo medio sia progressivamente calato, a testimonianza della tesi sostenuta precedentemente. 
+La rivista \textit{Forbes} cita come esempio le date italiane di \textit{On The Run Tour pt. II} di \textit{Jay-Z} e \textit{Beyoncé}, tenutesi nel Luglio 2018 presso gli stadi San Siro di Milano e Olimpico di Roma, in cui alcuni biglietti sul mercato secondario erano acquistabili a prezzi inferiori a 10€, contro un valore di emissione superiore ai 50€, prezzo minimo per le date sopracitate (Figura \ref{jayz}):
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.68\textwidth]{chapter4/immagini/beyonce_jay_z}
+	\caption{Biglietti per OTR II su StubHub}
+	\label{jayz}
+\end{figure}
+La ragione di crolli sostanziali può avere tre spiegazioni logiche, basate anche sulle teorie espresse da Courty e Stein (\cite{courty2014pricing, stein2014will}):
+\begin{itemize}
+\item Il biglietto aveva un Face Value sufficientemente alto e vicino al valore di mercato da lasciare gli speculatori con un quantità considerevole di biglietti invenduti da smaltire onde minimizzare le perdite e i costi di inventario.
+\item Per gli eventi di grande portata i biglietti vengono emessi anche più di sei mesi in anticipo, e questo comporta un fisiologico flusso di rivendita nei giorni immediatamente precedenti. 
+\item L'evento non ha venduto secondo le previsioni di mercato, e pertanto i biglietti sono reperibili sui portali dei rivenditori autorizzati. 
+\end{itemize}
+La volontà è quella di non lasciare utenti realmente bisognosi e desiderosi di privarsi del biglietto per impossibilità a partecipare con costi di inventario da sostenere e, al contempo, di contrastare le vendite di biglietti contraffatti sui portali secondari, fenomeno frequente soprattutto in casi di eventi di grossa portata (\cite{phdthesis}).
+%\section{Termini e Condizioni del Servizio}
+\section{Architettura software}
+Equiticket è costruito su un'architettura Cloud di server dinamicamente scalabili di proprietà di \textit{Digital Ocean}: l'allocazione real-time di capacità computazionale relativamente al carico dell'applicazione garantisce le prestazioni richieste dagli utenti al minimo prezzo possibile.  
+L'applicazione si serve inoltre di una logica proprietaria per la validazione dell'integrità del venditore e della transazione. Ad ora, Equiticket possiede anche un sistema CRM (Customer Relationship Management) in cui gli organizzatori certificati possono listare i propri eventi o gli utenti possono segnalarne di nuovi, se non fossero noti al sistema. Gli eventi segnalati dagli utenti sono considerati "aperti", e richiedono una verifica di legittimità da parte di un amministratore. \\*
+Al fine dell'implementazione della logica di gestione dei pagamenti e dei controlli antifrode, ci si serve delle API di \textit{Stripe}, azienda B2B leader nella gestione di flussi monetari delle aziende e nello sviluppo di meccanismi di pagamento per siti di e-commerce. 
+\subsection{PHP e Laravel}
+Il portale Equiticket si presenta come applicazione server scritta in PHP avvalendosi del framework Laravel, pensato per il pattern architetturale di tipo Model-View-Controller (\textit{MVC}).
+Laravel permette di specificare delle "rotte" (\textit{routes}), ovvero delle mappature univoche tra URL e le funzionalità offerte dall'applicazione. 
+\subsection{Architettura Cloud dell'applicazione}
+L'applicazione Equiticket risiede attualmente su server di proprietà di \textit{Digital Ocean}, azienda attiva nell'ambito del Cloud Computing. In particolare, si avvale di un servizio a pagamento di nome \textit{Droplets}, che consiste nella creazione di macchine virtuali (VM) configurabili in grado di ospitare l'applicazione. \\
+Una volta selezionato il tipo di VM richiesta e le specifiche tecniche, è sufficiente avviarla e  installare l'applicazione server, senza ulteriori accorgimenti gestionali o costi nascosti. In particolare, Digital Ocean offre una tariffazione oraria o mensile per il servizio "fully managed" Droplets: è possibile pagare o una quota mensile o una tariffa oraria per l'uptime delle macchine virtuali. \'E inoltre importante evidenziare come il Service Level Agreement offra un uptime garantito del 99,99\%, in modo che il sistema non risenta di eventuali problemi a livello fisico delle macchine. 
+\subsubsection{Capacità di calcolo automaticamente scalabile}
+Una volta configurata la capacità di calcolo della macchina virtuale richiesta, è possibile configurare il servizio di \textit{Load Balancer} offerti da Digital Ocean: si tratta di un oggetto in grado di ripartire equamente il carico dell'applicazione su un dato numero di macchine virtuali, in modo da garantire sempre un throughput alto. Tramite l'uso del freeware \textit{DOProxy} è inoltre possibile creare un ambiente in cui il numero delle VM (o Droplet) attive scala dinamicamente in maniera orizzontale in base al carico in ingresso. Si tratta di uno script Ruby compatibile coi Droplet che montano una versione di Ubuntu maggiore di 16.04 e hanno installato \textit{HAProxy}. %Autoscaling fatto con DO? 
+\subsubsection{Vantaggi rispetto alla soluzione on-premise}
+La soluzione cloud presenta diversi vantaggi rispetto alla cosiddetta soluzione "on-premise", in quanto non sovviene la necessità di acquistare server e macchine fisiche, in quanto la capacità computazionale è acquistabile da Digital Ocean secondo la formula "pay-as-you-go". Droplets è inoltre un servizio completamente gestito, in cui il titolare si fa carico della manutenzione delle macchine fisiche e del mantenimento dell'uptime stipulato sul Service Level Agreement. La scelta di una soluzione Cloud garantisce inoltre la possibilità di concentrarsi esclusivamente sull'attività del portale, sapendo che tutti i servizi complementari sono gestiti. 
+\subsection{Descrizione delle componenti}
+% Architettura UML + Sequence Diagram?
+\subsection{Design dell'interazione degli utenti}
+Un'architettura ad alto livello delle interazione degli attori coi componenti del sistema Equiticket è descritta nella Figura \ref{usecase}:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.68\textwidth]{chapter4/immagini/usecase}
+	\caption{Use Case Diagram del portale Equiticket}
+	\label{usecase}
+\end{figure}
+Gli attori principali individuati sono: 
+\begin{itemize}
+\item Acquirente (\textit{Customer}), utente registrato che può comprare titoli di accesso sul portale.
+\item Venditore (\textit{Seller}), utente registrato in grado di poter mettere in vendita titoli di accesso sul portale.
+\item Amministratore (\textit{Admin}), con accesso a tutti i dati di vendita, in grado di effettuare verifiche su nuovi eventi e, nel caso, inserirli a sistema.  
+\item Organizzatore Eventi (\textit{Organizer}), che può listare i suoi eventi per la vendita di titoli di accesso.
+\end{itemize}
+\subsubsection{Vendita di un biglietto}
+\textbf{\textit{Descrizione}}: L'utente registrato può mettere in vendita biglietti per un determinato evento. \\* 
+Il portale effettua distinzione tra due tipi di eventi: 
+\begin{itemize}
+\item Eventi \textit{"aperti"}: eventi non presenti nel sistema, che hanno bisogno di una verifica di esistenza da parte di un Amministratore. Tali eventi possono essere segnalati da qualsiasi utente registrato al portale, ma non saranno pubblicati prima di una verifica dettagliata. 
+\item Eventi \textit{"chiusi"}: eventi già presenti nella base di dati e la cui esistenza è già stata verificata. Di questi eventi sono noti anche tutti i valori di emissioni di tutte le tipologie di biglietto.
+\end{itemize}
+\textbf{\textit{Attori coinvolti}}: Utente registrato, Amministratore (facoltativo) \\*
+\textbf{\textit{Pre-Condizione}}: L'utente deve essersi registrato al portale Equiticket fornendo i suoi dati e deve possedere il biglietto che desidera rivendere. \\*
+\textbf{\textit{Azione}}: Se l'evento è chiuso, il sistema effettua un controllo sulla cifra richiesta dal venditore e controlla che sia minore o uguale al valore di emissione ufficiale. Se l'evento è aperto, il sistema lascia caricare il biglietto all'utente, e si riserva il diritto di approvarlo o respingerlo successivamente alle dovute verifiche. \\*
+Il venditore può mettere in vendita due tipologie di biglietto: 
+\begin{itemize}
+\item Fisico, in formato cartaceo: in questo caso il venditore dovrà impegnarsi a spedirlo entro sette giorni dalla vendita, come stabilito da \textit{Termini e Condizioni del Servizio} (o, più semplicemente, \textit{T\&C}). \'E possibile scegliere, al momento della messa in vendita, se la spedizione debba essere a carico del mittente o del destinatario.
+\item Digitale, solitamente in formato PDF: in questo caso il venditore può caricarlo direttamente sul portale al momento della messa in vendita.
+\end{itemize}
+\textbf{\textit{Post-Condizione}}: L'utente carica con successo il biglietto sul portale per la rivendita. \\*
+\textbf{\textit{Descrizione dettagliata del processo}}:
+\begin{enumerate}
+\item L'utente, previa registrazione, accede alla sua Area Riservata
+\item Dopo aver selezionato l'opzione "Vendi biglietti", l'utente può selezionare un evento già esistente o inserirne uno.
+\item L'utente sceglie tipologia di biglietto e cifra richiesta, e può fornire una ricevuta d'acquisto.
+%immagini del processo
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{chapter4/immagini/es_chiuso} % first figure itself
+        \caption{Evento chiuso e noto al sistema}
+				\label{evchiuso1}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{chapter4/immagini/es_chiuso_2} % second figure itself
+        \caption{Rivendita di biglietti per evento chiuso}
+				\label{evchiuso2}
+    \end{minipage}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{chapter4/immagini/ins_aperto} % first figure itself
+        \caption{Possibilità di sottomissione di un evento}
+				\label{evaperto1}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{chapter4/immagini/eventoaperto} % second figure itself
+        \caption{Dati da fornire per la sottomissione}
+				\label{evaperto2}
+    \end{minipage}
+\end{figure}
+\item Una volta forniti tutti i dati dell'evento, vengono richiesti i dati della carta di credito al venditore, che verranno successivamente utilizzati da Stripe. 
+\item Una chiamata API al metodo \textit{Authorization and Capture} di Stripe salva i dati della carta di credito del venditore in un oggetto chiamato \textit{Token}. Tale oggetto viene salvato su una base di dati proprietaria di Stripe, in modo che al portale non siano noti i dati sensibili bancari del cliente, come stabilito dalla normativa GDPR. \\* Al momento della cattura dei dati, non vengono effettuati né controlli su una eventuale disponibilità dei fondi, né pre-autorizzazioni per eventuali spese, né viene bloccata alcuna cifra.
+\item Il biglietto viene correttamente messo in vendita sul sito ed è disponibile per l'acquisto.
+\end{enumerate}
+\textbf{\textit{Eccezioni ed errori gestiti}}:
+\begin{itemize}
+\item Il venditore richiede un prezzo superiore al valore di emissione del biglietto: in questo caso la vendita viene rifiutata e il venditore è invitato ad abbassare il prezzo.
+\item Il venditore non fornisce i dati di una carta di credito, ma bensì quelli di una carta prepagata: in questo caso la vendita viene rifiutata. 
+\end{itemize}
+\paragraph{Stripe Token}
+Il \textit{\textbf{Token}} è un oggetto monouso che cattura i dati di una data carta di credito, in modo che il sistema veda semplicemente un codice alfanumerico invece che i dati sensibili bancari del cliente. Il Token può essere utilizzato con due tipi di oggetto: 
+\begin{itemize}
+\item L'oggetto Charge, associato a un determinato addebito da eseguire sulla carta di credito corrispondente al Token
+\item L'oggetto Customer, al quale il Token può essere assegnato
+\end{itemize}
+Si mostrano degli esempi di creazione e di applicazione del Token Stripe tramite frammenti di codice PHP: 
+\begin{lstlisting}[caption={Creazione di un Token associato alla carta di credito indicata nell'array card}]
+\Stripe\Token::create([ \\
+  'card' => [ \\
+    'number' => '4242424242424242', \\
+    'exp_month' => 6, \\
+    'exp_year' => 2019, \\
+    'cvc' => '101' \\
+  ]
+]);
+\end{lstlisting}
+\begin{lstlisting}[caption={creazione di un oggetto Customer, che verrà poi utilizzato per gestire pagamenti e vendite sul portale Equiticket}]
+\Stripe\Customer::create([
+  "description" => "Customer for a.pezzotta9@studenti.unibg.it",
+  "source" => "tok_ubibanca" // obtained with Stripe.js
+	// il codice del Token viene passato al costruttore dell'oggetto nella variabile "source"
+]);
+\end{lstlisting}
+
+\paragraph{Authorization and Capture}
+\textbf{\textit{Authorization and Capture}} è una API di tipo POST sviluppata da Stripe, utilizzabile da aziende o privati per generare pre-autorizzazioni di pagamento e trattenere la cifra richiesta per un determinato lasso di tempo. \'E possibile creare un oggetto \textit{Charge} rappresentante l'addebito da effettuare sulla carta di credito dell'acquirente o del venditore. Tramite la tecnologia di Stripe è inoltre possibile decidere se la "cattura" del pagamento debba essere immediata o se semplicemente il pagamento vada pre-autorizzato. Una volta data la pre-autorizzazione, è possibile riscuotere il pagamento con garanzia della Banca coinvolta entro sette giorni. La natura del tipo di Charge va specificata al momento della creazione, aggiundendo al costruttore un parametro \textit{"capture"}: 
+\begin{itemize}
+\item Se questo parametro viene impostato a \textit{"true"} (come avviene di default), la Charge viene catturata immediatamente, e il denaro verrà scalato immediatamente dalla carta di credito del soggetto identificato dal token. 
+\item Se invece capture viene impostata a \textit{"false"}, il pagamento viene pre-autorizzato, e può essere riscosso entro sette giorni, con garanzia dell'istituto bancario che ha emesso la carta di credito in oggetto.
+\end{itemize}
+
+\begin{lstlisting}[caption={creazione di un oggetto Charge, che verrà poi utilizzato catturare il pagamento corrispondente, con cattura immediata}]
+\Stripe\Charge::create([
+  "amount" => 2000,
+  "currency" => "eur",
+  "source" => "tok_ubibanca", 
+  "description" => "Charge for a.pezzotta9@studenti.unibg.it",
+	"capture" => "true" // valore di default, nel caso non venisse specificato
+	// In questo caso, il pagamento sarebbe riscosso immediatamente
+]);
+\end{lstlisting}
+\begin{lstlisting}[caption={creazione di un oggetto Charge, che verrà poi utilizzato catturare il pagamento corrispondente, con cattura entro sette giorni}]
+\Stripe\Charge::create([
+  "amount" => 2000,
+  "currency" => "eur",
+  "source" => "tok_ubibanca", // obtained with Stripe.js
+  "description" => "Charge for a.pezzotta9@studenti.unibg.it",
+	"capture" => "false" // In questo caso, il pagamento solo pre-autorizzato
+]);
+\end{lstlisting}
+
+\begin{lstlisting}[caption={cattura di un pagamento tramite le API Stripe}]
+$ch = \Stripe\Charge::retrieve("ch_19yUdo2thesis2CQlMNMP5b");
+$ch->capture();
+// Il pagamento viene catturato (immediatamente o entro sette giorni)
+\end{lstlisting}
+
+\subparagraph{Pagamenti non catturati}
+Secondo la documentazione delle API fornita da Stripe, i pagamenti non riscossi entro sette giorni scadranno e non saranno più catturabili. Bisognerà pertanto creare un nuovo oggetto Charge corrispondente al pagamento per poterlo processare nuovamente (\cite{stripedoc}). 
+\subsubsection{Processo di acquisto} \label{acquisto}
+\textbf{\textit{Descrizione}}: L'utente inserisce nel carrello il prodotto desiderato. Il sistema verifica la legittimità del venditore (tramite una chiamata API a un servizio di Stripe) e, nel caso positivo, permette l'acquisto tramite carta di credito. In caso contrario, il prodotto è rimosso dal carrello e dal sistema. \\*
+\textbf{\textit{Attori coinvolti}}: Cliente, Venditore, Banca, Stripe \\*
+\textbf{\textit{Pre-Condizione}}: Il controllo effettuato dalla API Stripe restituisce un risultato "true" \\*
+\textbf{\textit{Trigger}}: L'utente inserisce il prodotto nel carrello. \\*
+\textbf{\textit{Post-Condizione}}: L'utente acquista con successo il/i biglietto/i richiesto/i e il venditore viene pagato tramite bonifico bancario o PayPal. \\*
+\textbf{\textit{Descrizione dettagliata del processo}}: 
+\begin{enumerate}
+\item L'utente inserisce il prodotto desiderato nel carrello
+\item Un evento jQuery effettua una chiamata API al metodo "\textit{Authorization and Capture}", il quale verifica che il venditore del biglietto soddisfi i seguenti requisiti: 
+\begin{enumerate}
+\item La carta di credito sia ancora valida e non sia stata disattivata nel lasso di tempo successivo al primo controllo (effettuato al momento della messa in vendita).
+\item La liquidità sulla sua carta di credito soddisfi la seguente equazione: 
+\begin{align*}
+\textbf{$ L = P_{t} + C_{s} + 50 $}
+\end{align*}
+dove $P_{t}$ rappresenta la cifra richiesta per il biglietto e $C_{s}$ il costo dell'eventuale spedizione tramite corriere. Si controlla inoltre che il venditore abbia una cifra superiore a $P_{t} + C_{s}$ di almeno 50€: questo importo è stato stimato essere il prezzo medio di un evento di intrattenimento in Italia. Tale cifra verrà detratta dal conto del venditore in caso questo tenti di truffare il compratore evitando di spedire il biglietto, oppure mettendone in vendita uno contraffatto o inesistente. Il portale Equiticket si impegna infatti a fornire all'acquirente un ticket valido nel caso in cui il venditore si sottragga ai doveri espressi nel contratto di T\&C.
+\end{enumerate}
+\item Se i requisiti sono soddisfatti, il consumatore può effettuare l'acquisto tramite carta di credito e terminare l'operazione. Al momento del pagamento (\textit{check-out}), l'utente pagherà un prezzo pari a: 
+\begin{align*}
+\textbf{$ P_{f} = K \times{P_{t}} + C_{s} $}
+\end{align*}
+dove la cifra finale è data dai seguenti fattori: 
+\begin{itemize}
+\item $P_{t}$: cifra richiesta dal venditore. Tale importo dovrà essere positivo, ma minore del face value del biglietto originale. Tale condizione è esprimibile dalla seguente disuguaglianza: 
+\begin{align*}
+\textbf{$ 0 \leq{ P_{t}} \leq{ P_{fv}} $}
+\end{align*}
+\item $C_{s}$: costo della spedizione. Può essere nullo nel caso in cui la spedizione sia a carico del mittente o il biglietto sia in formato digitale: 
+\begin{align*}
+\textbf{$ C_{s} \geq{0} $}
+\end{align*}
+\item Il termine K rappresenta la commissione (\textit{"Transaction Fee"}) trattenuta dal portale, ed è un valore che non supera mai il 15\% del prezzo del biglietto sul portale: 
+\begin{align*}
+\textbf{$ 1 < K \leq{1.15} $}
+\end{align*}
+\end{itemize} 
+\'E importante sottolineare che, in caso di spedizione di biglietto cartaceo, la API \textit{Authorization and Capture} trattenga la cifra richiesta sulla carta del venditore per sette giorni, intervallo di tempo stabilito da T\&C per spedire il biglietto. Entro questa fascia temporale, il venditore dovrà fornire il numero di tracking della spedizione effettuata.
+Se invece si tratta di un biglietto digitale, la cifra viene rilasciata nel momento in cui l'acquirente effettua il download dalla sua area riservata. \\*
+Dal punto di vista tecnico, queste due operazioni sono il risultato di tre chiamate API: 
+\begin{itemize}
+\item la API "Authorization and Capture" viene chiamata usando come parametri il token assegnato al venditore, il valore della cifra da trattenere e il booleano \textit{capture}, che in questo caso dovrà essere "true".
+\item la API "Authorization and Capture" viene anche usata per generare la richiesta di addebito sulla carta di credito dell'acquirente: in questo caso non è necessario specificare il parametro "capture". Questa API viene anche usata nel caso in cui il venditore non spedisca il biglietto e debba quindi risarcire il cliente. 
+\item la API \textit{Refund} viene chiamata in automatico quando scadono i sette giorni previsti da T\&C e il venditore conferma la spedizione. La cifra trattenuta sulla carta viene così rilasciata.
+\end{itemize}
+\item Alla fine del processo di acquisto, il venditore viene pagato con la modalità di pagamento selezionata. Il pagamento viene erogato una volta decorsi sette giorni dalla data dell'evento, finestra di tempo prevista da T\&C perché l'acquirente apra eventuali contestazioni (es. biglietti contraffatti o differenti da quelli richiesti)
+\end{enumerate}
+\textbf{\textit{Eccezioni ed errori gestiti}}: 
+\begin{itemize}
+\item Il venditore non supera il controllo effettuato dalla API Stripe: in questo caso la vendita viene annullata e il biglietto rimosso dal portale. L'utente visualizzerà un messaggio di errore, mente il venditore riceverà una mail dettagliata riguardante il fallimento dell'esperienza di acquisto. 
+\item La carta di credito del cliente non ha sufficienti fondi per l'acquisto del biglietto: l'acquisto fallisce e l'utente è invitato a cambiare metodo di pagamento o annullare l'operazione. 
+\item Il venditore supera il controllo, ma non effettua la spedizione del biglietto nei sette giorni previsti dai \textit{Termini e Condizioni del Servizio}: in questo caso la cifra $P_{t} + C_{s} + 50$ viene detratta dalla carta del venditore, e il portale Equiticket si impegna a fornire all'Acquirente un biglietto equivalente a quello richiesto. 
+\end{itemize}
+Viene ora illustrato un tentativo di acquisto, effettuato in data 11/03/2019, in cui il controllo antifrode entra in azione e blocca un potenziale acquisto pericoloso. 
+Una volta scelto l'evento, è possibile, previa registrazione, selezionare un biglietto e inserirlo nel carrello, come mostra la Figura \ref{acq1}: 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.68\textwidth]{chapter4/immagini/acquisto1}
+	\caption{Scelta del biglietto per l'evento desiderato}
+	\label{acq1}
+\end{figure}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.68\textwidth]{chapter4/immagini/acquisto2}
+	\caption{Inserimento nel carrello}
+	\label{acq2}
+\end{figure}
+Appena inserito il biglietto nel carrello, la API \textit{Authorization and Capture} effettua il controllo sulla carta di credito fornita dal venditore. In questo caso, siccome i fondi non sono sufficienti, viene restituito un messaggio di errore all'acquirente (Figura \ref{fail1}):
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.68\textwidth]{chapter4/immagini/acquisto3}
+	\caption{Messaggio di errore: il venditore non ha fondi sufficienti}
+	\label{fail1}
+\end{figure} 
+%Spedizioni
+\subsubsection{Spedizione dei biglietti al destinatario}
+\textbf{\textit{Descrizione}}: un acquirente ha acquistato con successo un biglietto dal portale Equiticket: questa sezione descrive in dettaglio come il titolo di accesso venga recapitato al legittimo destinatario. 
+Come misura precauzionale, il sistema rimuove automaticamente tutti i biglietti per un dato evento quando mancano meno di quattro giorni alla manifestazione, nel caso si tratti di biglietti cartacei. \\*
+\textbf{\textit{Attori coinvolti}}: Acquirente, Venditore, Corriere, Stripe, Banca (gli ultimi due sono facoltativi) \\
+\textbf{\textit{Pre-Condizione}}: L'acquirente ha completato con successo il suo acquisto e attende la spedizione da parte del venditore. \\
+\textbf{\textit{Azione}}: Il venditore, una volta completato il processo di vendita, deve provvedere alla spedizione (obbligatoriamente tracciata) entro una finestra temporale di sette giorni dal momento dell'acquisto. Si noti che, da contratto, la vendita è definitiva, e da questo momento non è possibile annullare il processo: il mancato adempimento dei propri doveri comporta la penale prevista da T\&C.\\
+\textbf{\textit{Trigger}}: L'acquirente completa l'acquisto, pagando preventivamente anche le spese della spedizione (se previste) e le commissioni del portale Equiticket. \\
+\textbf{\textit{Post-Condizione}}: L'acquirente riceve il biglietto in tempo utile per l'evento. \\
+\textbf{\textit{Eccezioni ed errori gestiti}}: 
+\begin{itemize}
+	\item Il venditore non spedisce il biglietto in tempo utile: in questo caso la cifra $P_{t} + C_{s} + 50$,  descritta nelle sezioni precedenti, al momento trattenuta da Stripe, viene detratta dalla carta di 		credito del venditore, in modo che il portale Equiticket possa provvedere alla ricerca di un biglietto analogo a quello richiesto senza incorrere in ingenti perdite.
+	Dal punto di vista tecnico, l'operazione di "cattura" di un pagamento precedentemente pre-autorizzato avviene tramite una chiamata API a Stripe, che agisce sull'oggetto \textit{Charge} assegnato al venditore. Alla chiamata è necessario soltanto il codice univoco del Token, che contiene già tutti i dati della cifra pre-autorizzata. 
+	\item L'acquirente riceve un biglietto contraffatto: in questo caso ha sette giorni di tempo per aprire una contestazione sul portale Equiticket. Se le informazioni fossero vere, egli viene completamente rimborsato, mentre il venditore dovrà pagare una penale. 
+	%spiegare meglio, parlare con Claudio!
+\end{itemize}
+\subsubsection{Inserimento di un evento}
+\textbf{\textit{Descrizione}}: Un organizzatore o un utente registrato desiderano segnalare al sistema un evento non ancora presente nella base di dati: per farlo ricorrono all'apposita funzione presente nell'Area Riservata. \\
+\textbf{\textit{Pre-Condizione}}: l'utente deve preventivamente essersi autenticato fornendo i suoi dati di accesso. \\
+\textbf{\textit{Attori coinvolti}}: Organizzatore, Utente Registrato, Amministratore \\
+\textbf{\textit{Azione}}: l'utente crea l'evento fornendo tutti i dati richiesti. L'Amministratore di sistema ha il compito, prima di pubblicare l'evento sul portale, di verificarne l'esistenza e i prezzi dei titoli di accesso. \\
+\textbf{\textit{Trigger}}: L'utente sottomette la creazione di un evento. \\
+\textbf{\textit{Post-Condizione}}: In seguito al controllo da parte di un Amministratore, l'evento viene pubblicato correttamente sul sito, e il portale Equiticket d'ora in poi potrà supportare le vendite dei biglietti per tale manifestazione. \\
+\textbf{\textit{Eccezioni ed errori gestiti}}: 
+\begin{itemize}
+\item L'Amministratore non è in grado di verificare l'esistenza dell'evento, anche in seguito a ricerche: in questo caso l'evento non viene pubblicato e la richiesta dell'utente viene scartata. 
+\end{itemize}
+\textbf{\textit{Descrizione dettagliata del processo}}:
+\begin{enumerate}
+\item L'utente si registra sul portale, fornendo i suoi dati di accesso
+\item L'utente clicca su "Crea evento" nella sua Area Riservata (Figura \ref{crea}):
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.68\textwidth, height=8cm]{chapter4/immagini/creaevento}
+	\caption{Area riservata per creazione eventi}
+	\label{crea}
+\end{figure} 
+\item L'utente fornisce i dati dell'evento compilando il form fornito dal portale (Figura \ref{form1} e \ref{form2}):
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{chapter4/immagini/form1} % first figure itself
+        \caption{Form, parte 1}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{chapter4/immagini/form2} % second figure itself
+        \caption{Form, parte 2}
+    \end{minipage}
+\end{figure}
+\item Una volta che l'utente sottomettela richiesta di creazione dell'evento, viene inviata una mail di notifica all'Amministratore del Sistema
+\item L'Amministratore verifica l'esistenza dell'evento e controlla i prezzi per l'acquisto dei biglietti. 
+\item In base all'esito della ricerca, l'evento viene pubblicato sul sito, oppure la richiesta viene scartata. In caso positivo, d'ora in poi gli utenti e l'Organizzatore potranno vendere biglietti sul portale Equiticket. 
+\end{enumerate}
+\subsection{Gestione dei pagamenti e controllo anti-frode}
+%\Qui vanno tutti i frammenti di codice e le chiamate API
+La logica che gestisce il controllo dei pagamenti e i controlli anti-frode si avvale di codice PHP proprietario unito ad alcune API fornite dall'azienda statunitense Stripe. 
+Il controllo effettuato dal sistema tramite Stripe si prefigge lo scopo di scongiurare i rischi di una possibile truffa per l'acquirente e garantire la migliore esperienza d'acquisto possibile. 
+\subsubsection{Trattenute sulla carta di credito del venditore}
+Il controllo sulla carta di credito del venditore è necessario come garanzia, e si articola in più fasi: 
+\begin{enumerate}
+\item Quando il venditore mette in vendita il biglietto, deve inserire il numero della sua carta di credito. I dati verranno salvati su una base di dati di Stripe, mentre il portale Equiticket salverà semplicemente l'oggetto \textit{Token} generato dinamicamente da Stripe e associato univocamente all'utente.
+%Codice authorizazion and capture Stripe per catturare i dati 
+\item Quando l'acquirente inserisce il biglietto nel carrello, la API Authorization and Capture controlla che il venditore abbia fondi per la quantità $P_{t} + C_{s} + 50$, già descritta nella sezione \ref{acquisto}
+%Inserire frammento PHP
+\item Quando l'acquirente acquista con successo il biglietto, viene richiamata la API Authorization and Capture, in cui stavolta il parametro "capture" viene passato come "true": così facendo, la cifra $P_{t} + C_{s} + 50$ viene trattenuta per un totale di sette giorni, finestra temporale in cui il venditore deve provvedere alla spedizione del biglietto secondo le modalità concordate.
+%Inserire frammento PHP
+\item Una volta trascorsi sette giorni dalla data della trattenuta, viene chiamata la API Refund di Stripe, che rilascia la cifra trattenuta sulla carta di credito del venditore, una volta avuta la conferma di spedizione.
+%Inserire frammento PHP
+\end{enumerate}
+Solo in caso di mancata spedizione la cifra viene addebitata sul conto del venditore che non ha rispetto T\&C del servizio Equiticket. 
+\section{Test della soluzione in casi reali}
+Questa sezione si occupa di mostrare il reale funzionamento del portale Equiticket: in particolare, verrà definito uno scenario di test in cui verranno simulate diverse situazioni, sia di tentata frode che di acquisto. Si vuole mostrare, sia dal punto di vista grafico che tecnico, tramite frammenti di codice, la risposta dell'architettura software a tali eventi. 
+\subsection{Simulazione di un caso di tentata frode}
+%TODO
+\subsection{Simulazione di una transazione terminata con successo}
+%TODO
+\section{Progetti e sviluppi futuri}
+%TODO
+Sono numerosi i progetti per gli sviluppi futuri di Equiticket. Tra i principali sono annoverati i seguenti: 
+\begin{itemize}
+\item Lo sviluppo di una blockchain per la gestione dei pagamenti, sul modello di BitTicket, descritta nella Sezione \ref{chap:bitt}. La creazione di un modello distribuito proprietario garantirà protezione in caso di attacchi da parte di Bot, data la latenza dovuta all'approvazione di M nodi appartenenti alla rete. In più ogni transazione sarà pubblicamente consultabile e immutabile sui nodi del sistema. 
+\item La trasformazione in portale primario autorizzato per la vendita di titoli di accesso grazie ad accordi commerciali con i principali promoter italiani. 
+\end{itemize}
