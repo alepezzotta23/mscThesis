@@ -1,2 +1,29 @@
 \chapter{Introduzione}
 \label{chap:intro}
+Da sempre il settore degli eventi ha suscitato grande interesse pubblico e clamore a seguito della sua unicità e della sua concezione nell'immaginario collettivo. La scelta di trattare nella Tesi un noto problema che affligge questa realtà deriva dalla volontà della passione dell'autore per il settore, in particolare quello musica, e dalla volontà di occuparsi attivamente per la ricerca di una soluzione che permetta una maggiore trasparenza nella vendita dei titoli di accesso e una qualità maggiore nell'esperienza complessiva per il consumatore. \\
+In particolare, è stato scelto il problema del \textbf{\emph{Ticketing}} come argomento principale della trattazione, anche data la notorietà che il problema ha acquisito su suolo italiano a partire dalla fine del 2016, come descritto nella sezione \ref{coldplay}: si vuole quindi cogliere l'opportunità di sfruttare la letteratura recente, il giornalismo d'inchiesta e le più recenti soluzioni informatiche per offrire un apporto attivo alla ricerca e avvicinarsi alla soluzione del problema. \\
+Per Ticketing si intende il mondo della vendita dei biglietti (o titoli di accesso) per eventi o manifestazioni di qualsiasi tipo. \\
+Per \textbf{\textit{Secondary Ticketing}} si intende invece il mercato secondario dei titoli di accesso, quello derivante dalla rivendita di biglietti acquistati da rivenditori autorizzati. Il termine per definizione include qualsiasi tipo di vendita secondaria, da quella tra privati a quella organizzata: negli ultimi anni però si tende a indicare con tale termine il mondo della rivendita organizzata di titoli di accesso a prezzi inflazionati, ovvero maggiori del loro prezzo di emissione. Nel corso della trattazione della tesi infatti il termine Secondary Ticketing verrà usato per descrivere la rivendita organizzata a prezzi maggiorati. In italiano questo fenomeno è noto come \textbf{\textit{bagarinaggio}}. 
+\section{Descrizione della soluzione} \label{sec:desc}
+In seguito alla crescita del commercio online ("\textit{e-commerce}") e all'espansione del fenomeno del Secondary Ticketing tramite la creazione di siti web dedicati alla pura speculazione monetaria ai danni del consumatore (si veda la Sezione \ref{sec:origin}), l'idea è quella di proporre un'alternativa etica in cui il consumatore possa avere un'esperienza di acquisto piacevole senza rischio di truffa, contraffazione o speculazione: la soluzione proposta è il portale \textbf{\textit{Equiticket}}, sito di e-commerce in cui ogni utente può rivendere titoli di accesso, con la condizione che il prezzo richiesto sia minore o uguale del valore di emissione del biglietto, in modo da prevenire ogni forma di speculazione. Questo accorgimento, unito a una serie di logiche software in grado di prevenire numerosi casi di frode (come verrà mostrato nella sezione \ref{sec:testing}), garantisce livelli di sicurezza non riscontrabili su altri portali di Secondary Ticketing. In particolare, il contributo del candidato sarà concentrato sulla gestione delle logiche di pagamento e sui controlli anti-frode operati dal Sistema nei confronti di acquirenti e venditori. 
+\section{Sommario della Tesi} \label{sec:sommario}
+La Tesi è così delineata:
+\paragraph*{Capitolo 2: Stato dell'Arte} 
+Questo capitolo ripercorre brevemente la storia del Secondary Ticketing e cerca le cause principali per la crescita esponenziale del fenomeno, trovando ragioni di ordine politico, economico ed informatico.
+\paragraph*{Capitolo 3: Provvedimenti attuati e Best-Practice} 
+Descrive le pratiche finora attuate per mitigare il fenomeno, evidenziando pro, risultati ed eventuali possibili punti di ulteriore avanzamento. Per un'esposizione più chiara, i provvedimenti individuati vengono divisi in tre categorie: 
+\begin{enumerate}
+\item \emph{Legali}: include leggi, emendamenti e decreti emanati per mitigare e combattere il fenomeno. 
+\item \emph{Strategici}: include politiche aziendale, cambiamenti strategici e prese di posizione attuate dagli attori coinvolti in risposta al fenomeno. 
+\item \emph{Tecnici}: include provvedimenti di tipo informatico e implementazioni software dedicate alla trattazione del problema. 
+\end{enumerate}
+\paragraph*{Capitolo 4: Sviluppo della soluzione Equiticket come risposta al Secondary Ticketing} 
+Questo capitolo racchiude il contributo attivo vero e proprio dell'autore, e si concentra sulla concezione e lo sviluppo del portale Equiticket. Nella trattazione verrà presentata l'architettura software e verranno descritti i pattern utilizzati e le metodologie seguite. Viene inoltre dedicato ampio spazio a una simulazione di casi reali in un ambiente di test dedicato per Equiticket, in modo da dimostrare l'effettivo valore della soluzione e le maggiori differenze rispetto ad applicazioni già operanti nello stesso ambito. \\
+Il contributo del candidato al problema è così strutturato: 
+\begin{itemize}
+\item Analisi funzionale del mercato sottostante la soluzione e individuazione dei maggiori punti di forza su cui puntare per lo sviluppo (Sezione \ref{sec:background}).
+\item Analisi e stesura di requisiti funzionali e non-funzionali dell'applicazione presentata (Sezione \ref{sec:requisiti}): ci si concentra sul design dell'interazione degli utenti e sulla definizone funzionale dei metodi principali dell'applicazione. 
+\item Design dell'architettura software dell'applicazione (Sezione \ref{sec:impl}) e, in particolare, gestione dei controlli anti-frode e logiche di pagamento (Sezione \ref{fraud}).
+\end{itemize} 
+\paragraph*{Capitolo 5: Conclusioni e sviluppi futuri} 
+Descrive le possibili direzioni di ricerca e lo sviluppo del progetto Equiticket per la fine del 2019 e il corso del 2020. 
