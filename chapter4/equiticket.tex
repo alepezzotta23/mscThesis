@@ -1,4 +1,4 @@
-\chapter{Sviluppo della soluzione Equiticket come risposta al Secondary Ticketing}
+\chapter{Sviluppo della soluzione Equiticket come risposta al Secondary Ticketing} \label{chap:equiticket}
 Il capitolo \ref{chap:equiticket} ha lo scopo di mostrare il contributo apportato dal candidato alla soluzione proposta. La struttura della presentazione segue quella già enunciata nella Sezione \ref{sec:sommario}.
 \label{chap:equiticket}
 \section{Background economico e origine della soluzione} \label{sec:background}
@@ -339,7 +339,7 @@ Come misura precauzionale, il sistema rimuove automaticamente tutti i biglietti 
 \begin{itemize}
 	\item Il venditore non spedisce il biglietto in tempo utile: in questo caso la cifra $P_{t} + C_{s} + 50$,  descritta nelle sezioni precedenti, al momento trattenuta da Stripe, viene detratta dalla carta di 		credito del venditore, in modo che il portale Equiticket possa provvedere alla ricerca di un biglietto analogo a quello richiesto senza incorrere in ingenti perdite.
 	Dal punto di vista tecnico, l'operazione di "cattura" di un pagamento precedentemente pre-autorizzato avviene tramite una chiamata API a Stripe, che agisce sull'oggetto \textit{Charge} assegnato al venditore. Alla chiamata è necessario soltanto il codice univoco del Token, che contiene già tutti i dati della cifra pre-autorizzata. 
-	\item L'acquirente riceve un biglietto contraffatto: in questo caso ha sette giorni di tempo per aprire una contestazione sul portale Equiticket. Se le informazioni fossero vere, egli viene completamente rimborsato, mentre il venditore dovrà pagare una penale. 
+	\item L'acquirente riceve un biglietto contraffatto: in questo caso ha sette giorni di tempo per aprire una contestazione sul portale Equiticket. Se le informazioni fossero vere, egli verrebbe completamente rimborsato, mentre il venditore dovrà pagare una penale. 
 	%spiegare meglio, parlare con Claudio!
 \end{itemize}
 \subsubsection{Inserimento di un evento}
@@ -399,9 +399,67 @@ L'applicazione consta di tre tipi di server, che seguono il paradigma della cosi
 
 %Immagine 3-Tier?
 \subsection{Descrizione delle componenti}
-\subsubsection{Modello}
-\subsubsection{Vista}
+L'utilizzo del framework PHP \emph{Laravel} permette di gestire con facilità l'applicazione tramite l'utilizzo del pattern architetturale "Model-View-Controller" (\emph{MVC}). 
+\subsubsection{Model}
+Ogni oggetto dichiarato parte del modello dovrà estendere la classe predefinita \textit{Model}: tale relazione permette la mappatura dell'oggetto creato con l'oggetto sottostante e corrispondente nella base di dati grazie al software di \textit{ORM} ("Object Relationship Management") chiamato Eloquent, tecnologia proprietaria di Laravel, compatibile con i maggiori DBMS come mySQL e PostGreSQL.
+Un esempio di mappatura tra tabella, presente nella base di dati relazionale utilizzata, e classe PHP è mostrato nei frammenti di codice \ref{lst:model_ticket} e \ref{lst:model}: 
+\begin{lstlisting}[language=PHP, caption={Mappatura della tabella Ticket e del corrispondente oggetto PHP}, label={lst:model_ticket}]
+class Ticket extends Model {
+	protected $fillable = [
+		'name',
+		'price',
+		'quantity',
+		'ddp',
+		'insurance',
+		'note',
+		'percentage_insured',
+		'insured',
+		'quantity_insured',
+		'event_id',
+		'user_id',
+		'start_date',
+		'end_date',
+		'start_sell_time',
+		'end_sell_time',
+		'percentage',
+		'insured_chosen',
+		'unique_id',
+		'file'
+	];
+}
+\end{lstlisting}
+\begin{lstlisting}[language=PHP, caption={Mappatura tra tabella Event e corrispondente oggetto PHP}, label={lst:model_event}]
+class Event extends Model implements HightstreetContract {
+	protected $fillable = [
+		'name',
+		'start_date',
+		'end_date',
+		'opening_time',
+		'location',
+		'capacity',
+		'address',
+		'house_number',
+		'postal_code',
+		'city',
+		'province',
+		'nation',
+		'flyer',
+		'places_map',
+		'accepted',
+		'handled',
+		'description',
+		'category',
+		'user_id',
+		'end_time',
+		'sub_category'
+	];
+}
+\end{lstlisting}
+La mappatura tra tabelle relazionali e classi PHP facilita l'implementazioni di agenti (Controller) che performano operazioni \emph{CRUD} (Create, Read, Update, Delete) sugli oggetti e, di riflesso, sulle tabelle relazionali sottostanti l'architettura. 
+
 \subsubsection{Controller}
+I Controller implementati tramite il framework Laravel estendono tutti la classe base "Controller" e contengono tutte le operazioni CRUD abilitate sull'oggetto controllato. I metodi definiti nei controller permettono la gestione delle operazioni precedentemente descritte nella Sezione \ref{sec:requisiti}: coerentemente con le scelte di design effettuate, ogni Controller della soluzione Equiticket gestisce tutte le operazioni concesse e modifica direttamente la base di dati. 
+%Diagrammi
 \subsection{Gestione dei pagamenti e controllo anti-frode} \label{fraud}
 %\Qui vanno tutti i frammenti di codice e le chiamate API
 La logica che gestisce il controllo dei pagamenti e i controlli anti-frode si avvale di codice PHP proprietario unito ad alcune API fornite dall'azienda statunitense \emph{Stripe}. 
@@ -529,170 +587,3 @@ if( ! $equiticket->bypass_check) {
 \end{enumerate}
 Solo in caso di mancata spedizione la cifra viene addebitata sul conto del venditore che non ha rispettato T\&C del servizio Equiticket.
 % Inserire frammento PHP?
-\section{Test della soluzione in casi reali} \label{sec:testing}
-Questa sezione si occupa di mostrare il reale funzionamento del portale Equiticket: in particolare, verrà definito uno scenario di test in cui verranno simulate diverse situazioni, sia di tentata frode che di acquisto. Si vuole mostrare, sia dal punto di vista grafico che tecnico, tramite frammenti di codice, la risposta dell'architettura software a tali eventi. \\
-Per il test dei casi d'uso e la verifica dell'effettivo funzionamento delle componenti descritte viene usata una metodologia di testing "\emph{black-box}": non si procederà con gli Unit Test delle classi e dei metodi, ma bensì si verificherà che il funzionamento effettivo sia uguale a quello descritto dai requisiti funzionali. Non si tiene conto della struttura implementativa degli oggetti nel corso di questi test, poiché si ritiene più importante concentrarsi sui criteri di rispetto dei requisiti. \\
-I test vengono effettuati nell'ambiente di test di Equiticket: si tratta di un sito dedicato con il medesimo funzionamento del portale di produzione. Per un corretto svolgimento vengono usate le stesse API Stripe descritte in precedenza, con la differenza che la "Key" punterà all'ambiente di test e non a quello di produzione. La base di dati di riferimento è una copia ristretta di quella principale, in modo che i dati utilizzati non interferiscano con quelli reali che vengono trattati durante le transazioni. 
-Tutti i test vengono effettuati in un ambiente dedicato, situato all'indirizzo "\emph{staging.equiticket.com}".
-Gli attori coinvolti sono: 
-\begin{itemize}
-\item \textbf{\textit{Acquirente}}, simulato dal candidato con un'utenza personale.
-\item \textbf{\textit{Venditore}}, simulato dal candidato con l'utenza istituzionale dell'Università di Bergamo.
-\item \textit{\textbf{Amministratore}} di Sistema, con accesso a base di dati e log, simulato dal correlatore. L'Amministratore può accedere al pannello di controllo e avere visione completa di tutte le transazioni già avvenute sul portale e anche di quelle in corso, con relativi dettagli. Egli può inoltre modificare la tipologia degli eventi (aperti/chiusi) e approvare manualmente transazioni e contestazioni, se necessario. 
-\item \textbf{\textit{Stripe}}: il corretto funzionamento delle logiche anti-truffa dipende dalle API utilizzate: per questo motivo si include il servizio come agente principale. Verranno usate due API sviluppate da Stripe e integrate nel codice sorgente di Equiticket: 
-\begin{enumerate}
-\item \emph{Authorization and Capture}, già descritta nel paragrafo dedicato, adibita alla pre-autorizzazione e alla cattura dei pagamenti pendenti. 
-\item \emph{Refund}, utilizzata per il pagamento dei venditori e lo sblocco dei fondi trattenuti sulle carte di credito. 
-\end{enumerate}
-\end{itemize}
-Per l'esecuzione dei test è stato scelto come evento la partita calcistica di Serie A Torino-Milan, e questo evento è inoltre stato contrassegnato come "aperto": in questo modo sarà possibile mostrare come queste manifestazioni necessitino di una ulteriore approvazione da parte di un Amministratore. 
-Per garantire una maggiore coerenza dei risultati, si specifica che i test e i relativi screenshot sono stati effettuati tra il 18 e il 25 Aprile 2019. 
-
-\subsection{Simulazione di un caso di tentata frode}
-%TODO
-In questo test, verrà simulata una frode in cui il venditore non supera il primo controllo effettuato sulla carta di credito, così che l'acquirente non possa acquistare con successo il biglietto: il biglietto verrà inoltre rimosso dal portale, in modo che nessun altro acquirente lo visualizzi come disponibile per l'acquisto. 
-Il test viene così strutturato: 
-\begin{enumerate}
-\item Vengono create due utenze nell'ambiente di test, una adibita alla messa in vendita di un biglietto, l'altra all'acquisto. 
-\item Viene messo in vendita un biglietto per un evento già esistente a sistema. Nel Token vengono salvati i dati di una carta di credito fasulla (\textit{Test Card}, \cite{stripedoc}) con un saldo inferiore alla cifra $P_{t} + C_{s} + 50$: 
-\begin{equation}
-S < P_{t} + C_{s} + 50
-\end{equation}
-Le Test Card sono delle carte di credito fittizie implementate da Stripe per i test di diversi casi d'uso: in particolare, la Test Card scelta permette l'associazione a un oggetto Customer e la creazione di un Token, ma non permette la creazione di alcuna Charge nei suoi confronti, pertanto ogni tentativo di addebito fallirà \cite{stripedoc} (Figura \ref{testvoid}).
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.68\textwidth, height=12cm]{chapter4/immagini/test2_cartavuota}
-	\caption{Carta di credito non addebitabile}
-	\label{testvoid}
-\end{figure}
-Tale operazione di cattura della carta di credito viene seguita chiamando la API Authorization and Capture descritta in precedenza: l'unica differenza è la "\emph{Stripe Key}", che in questo caso punterà all'ambiente di test.
-\item Poiché si tratta di un \textit{evento aperto}, l'Amministratore deve approvarlo manualmente dal pannello dedicato (Figura \ref{testappr1} e \ref{testappr2}):
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.68\textwidth]{chapter4/immagini/test_approvazione}
-	\caption{Il biglietto appena sottomesso non è ancora approvato}
-	\label{testappr1}
-\end{figure}
-L'Amministratore deve cliccare su "Accettato" e poi confermare la propria scelta perché il biglietto venga effettivamente messo in vendita: 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.68\textwidth]{chapter4/immagini/test_admin2}
-	\caption{Approvazione dell'evento}
-	\label{testappr2}
-\end{figure}
-Si ricorda che, se l'evento fosse stato già chiuso, questo step non sarebbe necessario, poiché in tal caso tutti i dettagli dell'evento sarebbero già noti al sistema. 
-Una volta approvato (Figura \ref{accettato}), l'evento appare sul sito coi relativi biglietti in vendita: 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.68\textwidth]{chapter4/immagini/test_accettato}
-	\caption{Evento post-approvazione}
-	\label{accettato}
-\end{figure}
-\item L'acquirente inserisce nel carrello il biglietto in questione: il controllo di Stripe non rende possibile questa operazione in quanto la condizione del saldo disponibile non è soddisfatta. 
-L'utente acquirente visualizza il seguente messaggio (Figura \ref{testfail1}): 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.68\textwidth]{chapter4/immagini/test2_nondisp}
-	\caption{Biglietto non disponibile in seguito al fallimento del controllo Stripe}
-	\label{testfail1}
-\end{figure}
-Il venditore riceve la seguente mail (Figura \ref{mailfail}), la quale segnala che il biglietto viene rimosso causa mancanza di fondi sulla carta di credito: 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.68\textwidth]{chapter4/immagini/mail_fail}
-	\caption{Mail indicante il fallimento del controllo Stripe}
-	\label{mailfail}
-\end{figure}
-\item L'acquirente non acquista il biglietto e il biglietto viene rimosso dal sistema. La rimozione del titolo di accesso dal portale è visibile dal pannello di amministrazione (Figura \ref{admfail}):
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.68\textwidth]{chapter4/immagini/test2_fail2}
-	\caption{Biglietto eliminato}
-	\label{admfail}
-\end{figure}
-%simulare manualmente la mancata spedizione
-\end{enumerate}
-
-\subsection{Simulazione di una transazione terminata con successo}
-In questo test verrà simulato uno scenario in cui un utente registrato mette in vendita un biglietto, un acquirente lo acquista e lo riceve entro i sette giorni prestabiliti da T\&C: in questo caso il venditore viene pagato da Equiticket sette giorni dopo che l'evento ha avuto luogo: nel corso di questa finestra temporale l'acquirente può aprire una contestazione nel caso in cui il biglietto ricevuto sia contraffatto o diverso da quello acquistato (es. posti a sedere diversi). 
-Il test viene così strutturato: 
-\begin{enumerate}
-\item Viene messo in vendita un biglietto per un evento già esistente a sistema (evento chiuso). Nel Token (Figura \ref{testtok}) vengono salvati i dati di una carta di credito fasulla con un saldo superiore alla cifra $P_{t} + C_{s} + 50$ (Figura \ref{testev}): 
-\begin{equation}
-S \geq{P_{t} + C_{s} + 50}
-\end{equation}
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.68\textwidth]{chapter4/immagini/test_vendi}
-	\caption{Evento scelto per il test}
-	\label{testev}
-\end{figure}
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.68\textwidth]{chapter4/immagini/test_token}
-	\caption{"Test card" utilizzata da Stripe per la creazione del Token}
-	\label{testtok}
-\end{figure}
-La Test Card selezionata in particolare è una di quelle con fondi virtualmente illimitati, che può quindi acquistare per qualsiasi cifra e superare i controlli previsti dalla procedura di acquisto. 
-\item L'acquirente inserisce il biglietto nel carrello e lo acquista con successo.
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.68\textwidth]{chapter4/immagini/test_acquisto1}
-	\caption{Inserimento nel carrello del biglietto}
-	\label{testcart}
-\end{figure}
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.68\textwidth]{chapter4/immagini/pagamento}
-	\caption{Pagamento del biglietto desiderato}
-	\label{testmoney}
-\end{figure}
-\item Una volta completato l'acquisto, viene automaticamente inviata una mail all'acquirente (Figura \ref{testmail}): 
- \begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.68\textwidth]{chapter4/immagini/mail_acq}
-	\caption{Mail automatica confermante l'avvenuto acquisto}
-	\label{testmail}
-\end{figure}
-\end{enumerate}
-\subsubsection{Dati reali di transazioni}
-Data l'impossibilità di recuperare i dati di Stripe relativamente all'ambiente di test, in quanto non viene tenuta traccia delle transazioni fasulle tra Test Card, per mostrare l'effettivo funzionamento del meccanismo descritto vengono mostrate alcune transazioni relative ad eventi reali: 
-\begin{enumerate}
-\item \textbf{\textit{Pagamento effettuato con successo}}: i dati sono stati estrapolati da una transazione effettuata con successo per una cifra di 103,90€ (Figura \ref{stripe1} e \ref{stripe2}):  
-\begin{figure}[htbp]
-    \centering
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=0.9\textwidth]{chapter4/immagini/es_stripe} % first figure itself
-        \caption{Dettaglio del pagamento}
-				\label{stripe1}
-    \end{minipage}\hfill
-    \begin{minipage}{0.45\textwidth}
-        \centering
-        \includegraphics[width=0.9\textwidth]{chapter4/immagini/es_stripe_2} % second figure itself
-        \caption{Ulteriori dettagli del pagamento}
-				\label{stripe2}
-    \end{minipage}
-\end{figure}
-\item \textbf{\textit{Cifra trattenuta ai fini di sicurezza}}: viene mostrata ora la trattenuta di una cifra di 141€ a scopo preventivo (la stessa descritta nella Sezione \ref{tratt}), che avviene nel momento in cui l'acquirente inserisce il biglietto nel carrello: la cifra viene poi rilasciata sette giorni dopo, quando il venditore avrà già provveduto alla spedizione. 
-Per le trattenute, Stripe chiama la API "Authorization and Capture" senza però catturare immediatamente il pagamento: questa azione potrà essere fatta entro sette giorni, dopo i quali il Token scadrà e sarà necessario creare un altro oggetto Charge.
-Si mostra il dettaglio di una trattenuta effettuata in data 18/04/2019 (screenshot effettuato il giorno stesso), in cui si mostra che il pagamento non è effettivamente stato addebitato (Figura \ref{trattreal}), ma è ancora possibile farlo (non sono ancora trascorsi sette giorni): 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.68\textwidth]{chapter4/immagini/es_stripe_trattenuta}
-	\caption{"\emph{Test card}" utilizzata da Stripe per la creazione del Token}
-	\label{trattreal}
-\end{figure}
-Per le transazioni avvenute in ambiente di produzione, Stripe mette a disposizione la possibilità di mostrare il corpo della API che ha generato la transazione (Figura \ref{apireal}): 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=0.68\textwidth]{chapter4/immagini/es_stripe_capture}
-	\caption{Parametri con cui è stata chiamata "Authorization and Capture"}
-	\label{apireal}
-\end{figure}
-Coerentemente con quanto dichiarato nelle sezioni precedenti, il parametro \textit{capture} impostato a \textit{false} impedisce l'addebito immediato. 
-\end{enumerate}
-
-
-
-
